@@ -77,10 +77,9 @@ code;
 
 
 
-
-<!-- lesson 15 -->
-
 <?php 
+## ✅ #015 – Variable Variable
+
 echo "<br>"; 
     $a = "osama";
     echo $a;
@@ -92,12 +91,8 @@ echo "<br>";
     echo $elzero;
 
     echo "hello {$$a}";
-?>
 
 
-
-<?php  
-// Variable Variable  
 // Takes the value of a variable and treats that as the name of a variable  
 
 $a = "osama";  
@@ -115,4 +110,9 @@ echo "<br>";
 echo "Hello, {$a}"; // Hello, osama  
 echo "<br>";  
 echo "Hello, {$$a}"; // Hello, elzero  
+
+
+
+
+
 ?>  

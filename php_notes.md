@@ -268,3 +268,43 @@ echo $$a; // Outputs Ahmed
 
 ### 📍 Important Points
 - Use sparingly, mainly in dynamic code generation
+
+
+
+## 📘 Lesson #016 - Assign By Value And By Reference
+
+---
+
+### 🧠 Concept Overview
+
+In PHP, when assigning one variable to another, there are two main methods:
+
+- ✅ **Assign by Value**
+- 🔁 **Assign by Reference**
+
+Each behaves differently in memory and affects how changes are reflected.
+
+---
+
+### ✅ Assign by Value
+
+> A **copy** of the original variable's value is made.  
+> Changing the original does **not** change the copy.
+
+#### 🔸 Example:
+
+```php
+$x = "Ahmed";
+$y = $x;
+
+$x = "Osama";
+
+echo $x; // Osama
+echo $y; // Ahmed
+
+🧾 Explanation:
+
+"$y = $x means $y gets a copy of $x's value. "
+
+When $x is later changed to "Osama", $y stays as "Ahmed".
+
