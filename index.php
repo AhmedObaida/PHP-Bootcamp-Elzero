@@ -112,7 +112,22 @@ echo "<br>";
 echo "Hello, {$$a}"; // Hello, elzero  
 
 
-
-
-
 ?>  
+
+<?php
+## ✅ #016 – Assign By Value And By Reference
+
+echo "<br>";
+function addOne(&$number) {
+  $number++;
+  return $number;
+}
+
+$x = &$y;
+addOne($x);
+
+echo $x; // 6
+
+$x++;
+echo addOne($x);
+?>
