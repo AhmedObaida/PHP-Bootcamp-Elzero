@@ -998,7 +998,7 @@ Comparison operators in PHP are used to compare two values. The result of a comp
 | `<`      | Less than                | `$x < $y`           | true if x is less |
 | `>=`     | Greater than or equal    | `$x >= $y`          | true if x is greater or equal |
 | `<=`     | Less than or equal       | `$x <= $y`          | true if x is less or equal |
-
+| `<=>`    | Spaceship operator (three-way comparison) | `$x <=> $y` | Returns 0 if equal, -1 if `$x` is less, 1 if `$x` is greater |
 ---
 
 ### 🔸 Examples
@@ -1608,7 +1608,7 @@ echo $result;
 ### ✅ Example 3: Assignment vs Comparison
 
 ```php
-$test = true || false; // becomes: ($test = true) || false;
+$test = true || false; // becomes: $test = (true || false);
 echo $test; // true
 
 $test = false or true; // becomes: ($test = false) or true;
@@ -1661,7 +1661,6 @@ https://www.php.net/manual/en/language.operators.precedence.php
 **➤ Best Practice: Use parentheses even if you know the order—to make your code readable and safe.**
 
 ---
-
 
 ## 📘 Lessons #030-032 - If, Elseif, Else
 
@@ -1758,5 +1757,1045 @@ echo ($age >= 18) ? "Adult" : "Minor";
 - ✅ Always use curly braces `{}` to avoid logic errors.
 - 🔁 Nest `if` statements carefully for complex conditions.
 - 🚨 Use `===` for strict comparison (especially with strings or types).
+
+---
+
+## 📘 Lesson #033 - If, Elseif, Else - Alternate Syntax
+
+---
+
+### 🧐 What is Alternate Syntax?
+
+In PHP, especially when writing code inside HTML, you can use an **alternate syntax** for control structures such as `if`, `else`, and `elseif`. This makes code **cleaner and more readable**, especially in templates.
+
+---
+
+### 🔄 Standard Syntax (Recap)
+
+```php
+if ($x > 10) {
+    echo "X is greater than 10";
+} elseif ($x == 10) {
+    echo "X is exactly 10";
+} else {
+    echo "X is less than 10";
+}
+```
+
+---
+
+### 🌐 Alternate Syntax
+
+```php
+if ($x > 10):
+    echo "X is greater than 10";
+elif ($x == 10):
+    echo "X is exactly 10";
+else:
+    echo "X is less than 10";
+endif;
+```
+
+📝 Note:
+- Use a colon `:` instead of an opening curly brace `{`
+- Use `endif;` to close the `if` block instead of `}`
+
+---
+
+### ✅ When To Use Alternate Syntax?
+
+Alternate syntax is ideal when:
+- Mixing PHP with HTML (like in templates or views).
+- You want more **visual clarity**.
+
+---
+
+### 🔥 Example in HTML Template:
+
+```php
+<?php $loggedIn = true; ?>
+
+<html>
+<body>
+    <?php if ($loggedIn): ?>
+        <h1>Welcome, User!</h1>
+    <?php else: ?>
+        <h1>Please log in.</h1>
+    <?php endif; ?>
+</body>
+</html>
+```
+
+✅ This syntax avoids messy PHP tags and makes template logic clean.
+
+---
+
+### ⚠️ Notes
+
+- Always remember to close alternate syntax blocks with their proper keyword (`endif;`, `endfor;`, `endforeach;`, etc.)
+- Works for other structures like `while`, `foreach`, `for`, and `switch` too.
+
+---
+
+### 🧠 Summary
+
+| Feature              | Standard Syntax         | Alternate Syntax         |
+|---------------------|--------------------------|---------------------------|
+| Structure Start      | `{`                     | `:`                      |
+| Structure End        | `}`                     | `endif;`, `endforeach;` etc. |
+| Usage                | Pure PHP                | PHP with HTML templates  |
+
+---
+
+✅ Use alternate syntax when mixing PHP and HTML to keep your templates clean and readable!
+
+
+## 📘 Lesson #034 - Nested If And Advanced Practice
+
+---
+
+### 🧐 What Is Nested If?
+
+> A **nested if** is an `if` statement **inside another** `if` or `else` block.
+
+It's used when decisions depend on **multiple conditions**.
+
+---
+
+### 🔸 Basic Syntax
+
+```php
+if (condition1) {
+    if (condition2) {
+        // Code runs if both condition1 and condition2 are true
+    }
+}
+```
+
+You can also nest inside `else` or `elseif` blocks.
+
+---
+
+### 🧪 Example 1: Simple Nested If
+
+```php
+$age = 25;
+$country = "Egypt";
+
+if ($age >= 18) {
+    if ($country === "Egypt") {
+        echo "You are allowed to vote in Egypt.";
+    } else {
+        echo "Check voting rules in your country.";
+    }
+} else {
+    echo "You are too young to vote.";
+}
+```
+
+---
+
+### 🧪 Example 2: Nested If with More Conditions
+
+```php
+$user = "Ahmed";
+$isLoggedIn = true;
+$isAdmin = false;
+
+if ($isLoggedIn) {
+    if ($user === "Ahmed") {
+        if ($isAdmin) {
+            echo "Welcome Admin Ahmed";
+        } else {
+            echo "Welcome Ahmed (User)";
+        }
+    } else {
+        echo "Welcome Guest User";
+    }
+} else {
+    echo "Please log in.";
+}
+```
+
+📜 Explanation:
+- Checks if user is logged in.
+- Then checks their username.
+- Then checks if they are an admin.
+
+---
+
+### 🔄 Example 3: Replace Nested If with Logical AND
+
+```php
+$score = 90;
+$attendance = 95;
+
+if ($score >= 85 && $attendance >= 90) {
+    echo "You passed with honors!";
+} else {
+    echo "You didn't qualify for honors.";
+}
+```
+
+✅ This is **cleaner** and avoids deep nesting.
+
+---
+
+### 💡 Tips for Using Nested If
+
+- Avoid too much nesting — it can be hard to read.
+- Consider combining conditions with logical operators (`&&`, `||`).
+- You can always refactor complex nested logic into **functions**.
+
+---
+
+### 🧠 Practice Exercise:
+
+```php
+// Task: Check if user is adult AND has permission
+$age = 20;
+$hasPermission = true;
+
+if ($age >= 18) {
+    if ($hasPermission) {
+        echo "Access granted.";
+    } else {
+        echo "Permission denied.";
+    }
+} else {
+    echo "You are not old enough.";
+}
+```
+
+Try converting the above into a version using logical AND.
+
+---
+
+### 🎯 Conclusion
+
+- Nested `if` is useful for **layered decisions**.
+- Use them when you need to check one condition **inside** another.
+- Always try to keep your code readable and clear.
+
+## 📘 Lesson #035 - Ternary Conditional Operator
+
+---
+
+### 🧐 Concept Overview
+
+The **Ternary Operator** is a shorthand way of writing simple `if/else` statements in PHP.
+
+**Syntax:**
+```php
+(condition) ? value_if_true : value_if_false;
+```
+
+✅ It returns one of two values depending on whether the condition is **true** or **false**.
+
+---
+
+### 🔸 Basic Example
+
+```php
+$age = 20;
+$status = ($age >= 18) ? "Adult" : "Minor";
+
+echo $status; // Adult
+```
+
+📜 Explanation:
+- If `$age >= 18` is true, `$status` becomes "Adult".
+- Otherwise, it becomes "Minor".
+
+---
+
+### 🔸 Nested Ternary Example
+
+```php
+$score = 75;
+$result = ($score >= 90) ? "Excellent" :
+          (($score >= 70) ? "Good" : "Needs Improvement");
+
+echo $result; // Good
+```
+
+📜 Explanation:
+- If `$score >= 90` → "Excellent"
+- Else if `$score >= 70` → "Good"
+- Else → "Needs Improvement"
+
+🛑 **Avoid nesting** too many ternaries in one line — it becomes hard to read.
+
+---
+
+### 🔸 Used for Output Directly
+
+```php
+echo ($user_is_logged_in) ? "Welcome back!" : "Please log in.";
+```
+
+---
+
+### ✅ When to Use
+- When you need a quick conditional assignment.
+- For short and readable logic.
+
+### ⚠️ When to Avoid
+- For complex conditions with multiple branches → use `if/else` for clarity.
+
+---
+
+### 🧠 Summary
+- ✅ Ternary = Short `if/else`
+- 📌 Syntax: `(condition) ? true_val : false_val;`
+- 🚫 Don’t overuse or nest too deeply.
+
+
+## 📘 Lesson #036 - Switch
+
+---
+
+### 🧐 Concept Overview
+
+The `switch` statement in PHP is an alternative to using multiple `if...elseif...else` statements when checking the value of a single variable.
+
+---
+
+### 🧱 Syntax
+
+```php
+switch (expression) {
+    case value1:
+        // Code to execute if expression == value1
+        break;
+    case value2:
+        // Code to execute if expression == value2
+        break;
+    default:
+        // Code to execute if expression doesn't match any case
+}
+```
+
+---
+
+### 🔹 Example 1: Basic Usage
+
+```php
+$day = "Monday";
+
+switch ($day) {
+    case "Saturday":
+    case "Sunday":
+        echo "It's the weekend!";
+        break;
+    case "Monday":
+        echo "Back to work.";
+        break;
+    default:
+        echo "Midweek day.";
+}
+```
+
+📜 **Output**:
+```
+Back to work.
+```
+
+✅ `switch` checks the value of `$day` and executes the matching case.
+
+---
+
+### 🔹 Example 2: Grouping Cases
+
+```php
+$grade = 'B';
+
+switch ($grade) {
+    case 'A':
+        echo "Excellent!";
+        break;
+    case 'B':
+    case 'C':
+        echo "Good job!";
+        break;
+    case 'D':
+        echo "You passed.";
+        break;
+    case 'F':
+        echo "Try again.";
+        break;
+    default:
+        echo "Invalid grade.";
+}
+```
+
+📜 **Output**:
+```
+Good job!
+```
+
+---
+
+### ⚠️ Important Notes
+
+- 🧨 **Don't forget `break;`** – Without it, execution will "fall through" to the next case.
+- 🧩 `switch` uses `==` comparison (not `===`) — meaning types are not strictly checked.
+- 🆘 `default:` is optional but recommended for handling unexpected values.
+
+---
+
+### 🔁 When to Use `switch`
+
+Use `switch` when:
+- You're checking a **single variable** or expression.
+- You have **many possible fixed values**.
+- You want **cleaner, more readable** code than long `if...elseif` chains.
+
+---
+
+### ❗️Avoiding Common Pitfalls
+
+- ❌ Forgetting `break;` can cause unintended execution of multiple blocks.
+- ❌ Using complex conditions (like `$x > 10`) — use `if...else` instead for those.
+
+---
+
+### ✅ Summary
+
+- `switch` is a clean, readable way to branch logic based on **one variable's value**.
+- Each `case` should usually end with `break;` to prevent fall-through.
+- Always include a `default` block as a fallback.
+
+---
+
+
+## 📘 Lesson #037 - While Loop And Concept Of Loop
+
+---
+
+### 🔁 What Is a Loop?
+
+A **loop** is a structure that repeats a block of code **multiple times** as long as a condition is `true`.
+
+Useful when you want to:
+- Repeat tasks
+- Iterate over data
+- Automate repetitive actions
+
+---
+
+### 🔄 `while` Loop
+
+> The `while` loop executes a block of code **as long as** the condition is `true`.
+
+#### 🔸 Syntax:
+
+```php
+while (condition) {
+  // Code to execute
+}
+```
+
+📌 If the condition is initially false, the loop is **never executed**.
+
+---
+
+### ✅ Basic Example
+
+```php
+$counter = 1;
+
+while ($counter <= 5) {
+  echo "Counter is $counter<br>";
+  $counter++;
+}
+```
+
+📝 Output:
+```
+Counter is 1
+Counter is 2
+Counter is 3
+Counter is 4
+Counter is 5
+```
+
+📜 Explanation:
+- `$counter` starts at 1
+- As long as it's less than or equal to 5, the block runs
+- `$counter++` increases the value each time
+
+---
+
+### ⚠️ Infinite Loop Warning
+
+Be careful not to **forget to update** the loop variable.
+
+```php
+$x = 1;
+while ($x <= 5) {
+  echo $x;
+  // ❌ If we forget $x++ → infinite loop
+}
+```
+
+🛑 This will keep running forever unless stopped manually.
+
+---
+
+### 🔁 Real-Life Analogy
+
+"Keep eating until you're full."
+```php
+$hungry = true;
+
+while ($hungry) {
+  echo "Eating...<br>";
+  $hungry = false; // Once full, stop
+}
+```
+
+🧠 This is a loop with a real-world condition that ends when the condition changes.
+
+---
+
+### 🧪 Common Use Cases
+- Printing sequences (e.g. numbers, messages)
+- Validating user input
+- Running until a condition is met (like fetching data)
+
+---
+
+### 🛠 Best Practices
+- Always **initialize and update** your condition variables
+- Avoid complex conditions unless necessary
+- Test small loops first to prevent infinite execution
+
+---
+
+### 🧠 Summary
+
+| Feature         | Value                       |
+|----------------|-----------------------------|
+| Type           | Entry-controlled loop       |
+| Executes when  | Condition is `true`         |
+| Stops when     | Condition becomes `false`   |
+| Risk           | Infinite loop if not handled|
+
+✅ **Use `while` loops when** you don't know how many times you need to run in advance.
+
+---
+
+## 📘 Lesson #038 - Do While
+
+---
+
+### 🧐 Concept Overview
+
+The `do...while` loop in PHP is a control structure that executes a block of code **at least once**, and then it keeps executing it as long as the given condition is true.
+
+---
+
+### 🔁 Syntax
+
+```php
+ do {
+     // Code to execute
+ } while (condition);
+```
+
+---
+
+### 🔍 Key Difference from `while`
+
+- ✅ `while`: **Checks the condition first**, then may or may not execute the block.
+- ✅ `do...while`: **Executes the block first**, then checks the condition.
+
+---
+
+### 🔸 Example 1: Basic `do...while`
+
+```php
+$x = 1;
+
+do {
+    echo "Number is: $x <br>";
+    $x++;
+} while ($x <= 3);
+```
+
+📝 **Output:**
+```
+Number is: 1
+Number is: 2
+Number is: 3
+```
+
+✅ Even if `$x` was greater than 3 at the start, the block would still run **once**.
+
+---
+
+### 🔸 Example 2: Condition False Initially
+
+```php
+$x = 10;
+
+do {
+    echo "Hello<br>";
+} while ($x < 5);
+```
+
+📝 **Output:**
+```
+Hello
+```
+
+✅ It printed "Hello" **once**, even though `$x < 5` is false.
+
+---
+
+### 📦 Use Case Example: Prompt Until Valid Input (Simulated)
+
+```php
+$tries = 0;
+$correctPassword = "php123";
+$input = "";
+
+do {
+    // Simulate input
+    $input = "wrong";
+    $tries++;
+    echo "Try $tries: Incorrect password<br>";
+
+    if ($tries == 3) {
+        $input = $correctPassword;
+    }
+
+} while ($input !== $correctPassword);
+
+echo "Access Granted!";
+```
+
+📝 **Output:**
+```
+Try 1: Incorrect password
+Try 2: Incorrect password
+Try 3: Incorrect password
+Access Granted!
+```
+
+---
+
+### 🧠 Summary
+
+| Feature       | `while`                | `do...while`                  |
+|---------------|------------------------|-------------------------------|
+| Check Timing | Before loop body       | After one execution of body   |
+| Guarantee    | May never run          | Runs **at least once**        |
+
+✅ Use `do...while` when **at least one execution** is required no matter the condition.
+
+---
+
+## 🔁 Lesson #039 - Loop For
+
+---
+
+### 🧐 Concept Overview
+
+The `for` loop in PHP is used to repeat a block of code a known number of times.
+
+```php
+for (initialization; condition; increment) {
+    // Code to execute
+}
+```
+
+- **Initialization**: sets the starting point.
+- **Condition**: checked before each iteration.
+- **Increment**: changes the loop variable each time.
+
+---
+
+### 🔸 Basic Example
+
+```php
+for ($i = 0; $i < 5; $i++) {
+    echo $i . "<br>";
+}
+```
+
+📜 **Output:**
+```
+0
+1
+2
+3
+4
+```
+
+---
+
+### 🔍 Explanation
+
+- `$i = 0` ➝ Starts from 0.
+- `$i < 5` ➝ Loops until `$i` is less than 5.
+- `$i++` ➝ Increments `$i` by 1 each time.
+
+---
+
+### 🔸 Example With HTML
+
+```php
+for ($i = 1; $i <= 3; $i++) {
+    echo "<h3>Section $i</h3>";
+}
+```
+
+📜 Output:
+```html
+<h3>Section 1</h3>
+<h3>Section 2</h3>
+<h3>Section 3</h3>
+```
+
+---
+
+### 🔸 Looping Through Arrays
+
+```php
+$colors = ["red", "green", "blue"];
+
+for ($i = 0; $i < count($colors); $i++) {
+    echo $colors[$i] . "<br>";
+}
+```
+
+📜 Output:
+```
+red
+green
+blue
+```
+
+---
+
+### 🛑 Common Mistakes
+
+- Forgetting to update the loop variable ➝ infinite loop!
+- Using `<=` instead of `<` when indexing arrays ➝ leads to `Undefined offset`.
+
+---
+
+### ⚙️ Use Cases
+
+- Displaying lists
+- Creating tables
+- Looping through index-based structures
+- Repeating actions with counters
+
+---
+
+### 📘 Summary
+
+- `for` loop is ideal when you **know how many times** to repeat.
+- Always include the correct **initialization**, **condition**, and **increment**.
+
+➡️ Great for working with **indexed arrays** and counters!
+
+---
+
+## 📘 Lesson #040 - Loop Foreach
+
+---
+
+### 🧐 Concept Overview
+
+The `foreach` loop is used **only with arrays**. It provides a simple way to iterate through array elements **without using index counters**.
+
+---
+
+### 🔁 Syntax
+
+```php
+foreach ($array as $value) {
+    // code to execute
+}
+
+foreach ($array as $key => $value) {
+    // code to execute
+}
+```
+
+---
+
+### 🔸 Example 1: Loop Through Indexed Array
+
+```php
+$names = ["Ahmed", "Osama", "Sayed"];
+
+foreach ($names as $name) {
+    echo $name . "<br>";
+}
+```
+
+**Output:**
+```
+Ahmed
+Osama
+Sayed
+```
+
+✅ `\$name` takes each value from the array in order.
+
+---
+
+### 🔸 Example 2: Loop Through Associative Array
+
+```php
+$user = [
+    "name" => "Ahmed",
+    "age" => 30,
+    "country" => "Egypt"
+];
+
+foreach ($user as $key => $value) {
+    echo "$key: $value<br>";
+}
+```
+
+**Output:**
+```
+name: Ahmed
+age: 30
+country: Egypt
+```
+
+✅ You get both key and value using `as $key => $value` syntax.
+
+---
+
+### 🔸 Example 3: Nested Foreach
+
+```php
+$users = [
+    ["name" => "Ahmed", "age" => 30],
+    ["name" => "Sara", "age" => 25]
+];
+
+foreach ($users as $user) {
+    foreach ($user as $key => $value) {
+        echo "$key: $value<br>";
+    }
+    echo "---<br>";
+}
+```
+
+---
+
+### ⚠️ Notes and Tips
+
+- `foreach` works only with arrays or objects.
+- You don’t need to know the length of the array.
+- Original array is **not changed** unless you use `&` for reference.
+
+#### 🔹 Modify Array with Reference
+
+```php
+$nums = [1, 2, 3];
+
+foreach ($nums as &$num) {
+    $num *= 2;
+}
+
+print_r($nums); // [2, 4, 6]
+```
+
+🧠 Reference `&$num` modifies original array elements.
+
+---
+
+### ✅ Conclusion
+
+- `foreach` is great for **clean and readable** loops.
+- Use `key => value` if you need the keys.
+- Use reference `&` if you want to modify the original array.
+
+---
+
+## 📘 Lesson #041 - Break, Continue
+
+---
+
+### 🔹 `break` Statement
+
+> `break` is used to **exit** the current loop or switch case **immediately**.
+
+#### 🔸 Example:
+```php
+for ($i = 1; $i <= 10; $i++) {
+    if ($i == 5) {
+        break; // Exit the loop when $i is 5
+    }
+    echo $i . "<br>";
+}
+```
+
+📝 Output:
+```
+1
+2
+3
+4
+```
+
+📌 Once `$i` reaches 5, the loop stops.
+
+---
+
+### 🔹 `continue` Statement
+
+> `continue` is used to **skip** the current iteration and move to the **next** one in the loop.
+
+#### 🔸 Example:
+```php
+for ($i = 1; $i <= 5; $i++) {
+    if ($i == 3) {
+        continue; // Skip number 3
+    }
+    echo $i . "<br>";
+}
+```
+
+📝 Output:
+```
+1
+2
+4
+5
+```
+
+📌 Number 3 is skipped; the rest continue.
+
+---
+
+### 🔁 Combined Use Example:
+```php
+for ($i = 1; $i <= 10; $i++) {
+    if ($i == 3) {
+        continue; // skip 3
+    }
+    if ($i == 7) {
+        break; // stop when reaching 7
+    }
+    echo $i . "<br>";
+}
+```
+
+📝 Output:
+```
+1
+2
+4
+5
+6
+```
+
+---
+
+### ⚠️ Notes:
+- `break` is useful when a condition makes further looping unnecessary.
+- `continue` helps ignore specific iterations while keeping the loop running.
+- You can use them in all loop types: `for`, `while`, `foreach`, `do...while`.
+
+---
+
+🎯 Use `break` to stop 🔴, use `continue` to skip 🔁.
+
+---
+
+
+## 📘 Lesson #042 - Include And Require
+
+---
+
+### 🧠 What are `include` and `require` in PHP?
+
+They are both used to include the content of one PHP file into another PHP file.
+
+---
+
+### ✅ `include`
+- If the file is **not found**, it will show a **warning** but the script will **continue** running.
+
+#### 🔸 Example:
+```php
+include("header.php");
+echo "Welcome to the website!";
+```
+
+📌 If `header.php` does not exist:
+- PHP will show a warning.
+- But it will still display: `Welcome to the website!`
+
+---
+
+### ✅ `require`
+- If the file is **not found**, it will show a **fatal error** and the script will **stop** running.
+
+#### 🔸 Example:
+```php
+require("header.php");
+echo "Welcome to the website!";
+```
+
+📌 If `header.php` does not exist:
+- PHP will show a fatal error.
+- The rest of the script will **not** run.
+
+---
+
+### 🔁 `include_once` and `require_once`
+- These versions make sure the file is **included only once**.
+- Prevents multiple declarations (e.g., functions, classes).
+
+#### 🔸 Example:
+```php
+include_once("config.php");
+require_once("functions.php");
+```
+
+---
+
+### 📌 Use Case Summary:
+
+| Statement         | Behavior on Missing File | Continue Execution? |
+|------------------|---------------------------|----------------------|
+| `include`        | Warning                   | ✅ Yes               |
+| `require`        | Fatal Error               | ❌ No                |
+| `include_once`   | Warning                   | ✅ Yes               |
+| `require_once`   | Fatal Error               | ❌ No                |
+
+---
+
+### 🧪 Real Example:
+
+```php
+// config.php
+$siteName = "MySite";
+```
+
+```php
+// index.php
+include("config.php");
+echo $siteName; // Output: MySite
+```
+
+---
+
+### 🎯 Best Practices:
+- Use `require` or `require_once` for essential files (e.g., config, database).
+- Use `include` or `include_once` for optional files (e.g., widgets, sidebars).
+- Prefer `*_once` to prevent accidental redeclarations.
 
 ---
