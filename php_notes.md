@@ -2799,3 +2799,375 @@ echo $siteName; // Output: MySite
 - Prefer `*_once` to prevent accidental redeclarations.
 
 ---
+
+## 📘 Lesson #043 - Function Introduction And DRY Concept
+
+---
+
+### 🧠 What is a Function?
+A **function** is a block of code that performs a specific task and can be reused multiple times.
+
+---
+
+### 🔁 DRY Principle: Don't Repeat Yourself
+- Reuse code instead of repeating it.
+- Helps in cleaner and more maintainable code.
+
+---
+
+### 🔧 Function Syntax:
+```php
+function functionName() {
+    // Code to execute
+}
+```
+
+#### 🔸 Example:
+```php
+function sayHello() {
+    echo "Hello Ahmed!<br>";
+}
+
+sayHello(); // Hello Ahmed!
+sayHello(); // Hello Ahmed!
+```
+
+---
+
+### 📝 Notes:
+- Use functions to group related logic.
+- Great for large scripts or reusable components.
+
+---
+
+### ✅ Summary
+- Functions help make your code organized and efficient.
+- The DRY principle avoids code duplication.
+
+## 📘 Lesson #044 - Advanced Examples With Parameters And Arguments
+
+---
+
+### 🧠 What Are Parameters?
+Parameters are variables passed into functions.
+
+```php
+function greet($name) {
+    echo "Hello $name!<br>";
+}
+
+greet("Ahmed"); // Hello Ahmed!
+greet("Osama"); // Hello Osama!
+```
+
+---
+
+### 🔁 Multiple Parameters:
+```php
+function fullName($first, $last) {
+    echo "Hello $first $last!<br>";
+}
+
+fullName("Ahmed", "AbuObaida");
+```
+
+---
+
+### ⚠️ Notes:
+- Order matters.
+- You can combine strings, numbers, and logic in functions.
+
+---
+
+### ✅ Summary:
+- Functions can take arguments.
+- Parameters allow functions to behave dynamically.
+
+## 📘 Lesson #045 - Function Return And Echo
+
+---
+
+### 🔁 Echo vs Return
+- `echo` displays content.
+- `return` sends back a value to be used later.
+- if function doesn't return value so it will return NULL by default, that means if i didn't used return keyword and i used echo instead func will return NULL 
+---
+
+### 🧪 Example:
+```php
+function sayHello() {
+    echo "Hello Ahmed!<br>";
+}
+
+function getGreeting() {
+    return "Hello Ahmed!";
+}
+
+sayHello();
+$message = getGreeting();
+echo $message;
+```
+
+---
+
+### 📜 Explanation:
+- `sayHello()` outputs directly.
+- `getGreeting()` sends the string back, which we then `echo`.
+
+---
+
+### ✅ Summary:
+- Use `return` if you want to store or reuse the result.
+- Use `echo` for direct output.
+
+## 📘 Lesson #046 - Function Default Parameter Value
+
+---
+
+### 📍 What Is a Default Parameter Value?
+- A value that is used when no argument is passed.
+
+---
+
+### 🧪 Example:
+```php
+function greet($name = "Guest") {
+    echo "Hello $name!<br>";
+}
+
+greet("Ahmed");  // Hello Ahmed!
+greet();          // Hello Guest!
+```
+
+---
+
+### ⚠️ Note:
+- Default parameters should come **after** required ones.
+
+```php
+function welcome($name, $title = "Mr") {
+    echo "Welcome $title $name<br>";
+}
+```
+
+---
+
+### ✅ Summary:
+- Default values make your function flexible.
+- Avoid errors from missing arguments.
+
+## 📘 Lesson #047 - Function Variable Arguments List
+
+---
+
+### 🧠 What is Variadic Function?
+- Allows passing **unlimited** number of arguments using `...` (spread operator).
+
+---
+
+### 🧪 Example:
+```php
+function sumAll(...$numbers) {
+    $result = 0;
+    foreach ($numbers as $num) {
+        $result += $num;
+    }
+    return $result;
+}
+
+echo sumAll(1, 2, 3);      // 6
+echo sumAll(10, 20, 30);   // 60
+```
+
+---
+
+### 📌 Notes:
+- You get an array of arguments.
+- Use `foreach` or array functions to process them.
+
+---
+
+### ✅ Summary:
+- `...$args` allows dynamic arguments.
+- Useful for math, formatting, or collecting values.
+
+## 📘 Lesson #048 - Function Training And Unpacking Arguments
+
+---
+
+### 🧠 Unpacking Arrays Into Arguments
+- Use `...` to spread an array into separate arguments.
+
+```php
+function fullName($first, $last) {
+    echo "Hello $first $last!<br>";
+}
+
+$name = ["Ahmed", "AbuObaida"];
+fullName(...$name); // Hello Ahmed AbuObaida!
+```
+
+---
+
+### 🔁 Mixing Static and Dynamic Arguments
+```php
+function greet($greeting, ...$names) {
+    foreach ($names as $name) {
+        echo "$greeting $name<br>";
+    }
+}
+
+greet("Hi", "Ali", "Sarah", "Mona");
+```
+
+---
+
+### ✅ Summary:
+- `...` works for both sending and receiving arguments.
+- Great for working with dynamic data.
+
+## 📘 Lesson #049 - Function Variable And Function Exists
+
+---
+
+### 🧠 Variable Functions
+- Call a function using a variable name.
+
+```php
+function sayHi() {
+    echo "Hi Ahmed!<br>";
+}
+
+$func = "sayHi";
+$func(); // Calls sayHi()
+```
+
+---
+
+### 🔍 function_exists()
+- Check if a function is defined.
+
+```php
+if (function_exists("sayHi")) {
+    sayHi();
+} else {
+    echo "Function not found.";
+}
+```
+
+---
+
+### ✅ Summary:
+- Variable functions make your code dynamic.
+- Use `function_exists` to avoid errors in reuse.
+
+## 📘 Lesson #050 - Passing Arguments By Reference And Return Type Declaration
+
+---
+
+### 🔁 Passing By Reference
+- Use `&` to allow a function to **modify** the original variable.
+
+```php
+function addFive(&$num) {
+    $num += 5;
+}
+
+$x = 10;
+addFive($x);
+echo $x; // 15
+```
+
+---
+
+### 🔙 Return Type Declaration
+- Define the expected return type using `: type`
+
+```php
+function multiply(int $a, int $b): int {
+    return $a * $b;
+}
+
+echo multiply(3, 4); // 12
+```
+
+---
+
+### ⚠️ Notes:
+- `&` makes a function change the actual argument.
+- Return types ensure predictable outputs.
+
+---
+
+### ✅ Summary:
+- Use `&` to update variables.
+- Use `: type` for safer code.
+
+## 📘 Lesson #051 - Anonymous Function
+
+---
+
+### 🧠 What Is an Anonymous Function?
+- A function **without a name**.
+- Often stored in a variable or passed as an argument.
+
+```php
+$greet = function($name) {
+    return "Hello $name!";
+};
+
+echo $greet("Ahmed"); // Hello Ahmed!
+```
+
+---
+
+### 🔁 With array_map:
+```php
+$names = ["Ali", "Mona", "Sara"];
+
+$greetings = array_map(function($name) {
+    return "Hi $name";
+}, $names);
+
+print_r($greetings);
+```
+
+---
+
+### ✅ Summary:
+- Anonymous functions are useful for short, throwaway logic.
+- Common in callbacks, `array_map`, and dynamic code.
+
+## 📘 Lesson #052 - Arrow Function
+
+---
+
+### 🧠 What Is an Arrow Function?
+- Shorter syntax for anonymous functions (introduced in PHP 7.4)
+- Uses `fn` keyword.
+
+```php
+$square = fn($n) => $n * $n;
+echo $square(5); // 25
+```
+
+---
+
+### 🔁 Example with array_map:
+```php
+$numbers = [1, 2, 3, 4];
+$squares = array_map(fn($n) => $n * $n, $numbers);
+print_r($squares);
+```
+
+---
+
+### 📌 Notes:
+- Arrow functions **inherit** variables from the parent scope.
+- No need for `use()` keyword.
+
+---
+
+### ✅ Summary:
+- Use `fn()` for simple one-liner functions.
+- Cleaner and easier than full anonymous functions.
