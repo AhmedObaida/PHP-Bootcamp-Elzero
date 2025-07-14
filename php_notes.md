@@ -3171,3 +3171,665 @@ print_r($squares);
 ### ✅ Summary:
 - Use `fn()` for simple one-liner functions.
 - Cleaner and easier than full anonymous functions.
+
+
+## 📘 Lesson #053 - String Access and Update (Detailed)
+
+---
+
+### 🔤 String
+A string in PHP is a **sequence of characters**, and it behaves like an **array** when accessed by index.
+
+---
+
+### 🔹 Access Elements
+#### 🔸 String is an Array of Characters
+```php
+$name = "Ahmed";
+echo $name[0]; // A
+echo $name[2]; // m
+```
+
+#### 🔸 Zero-Based Indexing
+- First character is at index 0.
+- You access each character using `$string[index]`.
+
+```php
+$text = "PHP";
+echo $text[0]; // P
+echo $text[1]; // H
+```
+
+#### 🔸 Negative Indexing ✅ Supported (PHP 7.1+)
+- Allows accessing characters from the **end** of the string.
+- Index `-1` refers to the last character.
+
+```php
+$str = "Ahmed";
+echo $str[-1]; // d
+echo $str[-2]; // e
+```
+
+⚠️ Note: Negative indexing is **read-only**. You cannot assign a value using a negative index.
+
+```php
+$str[-1] = 'X'; // ❌ Warning in PHP
+```
+
+---
+
+### 🔧 Update Elements
+#### 🔸 Update Current Characters
+```php
+$name = "Ahmed";
+$name[0] = "O";
+echo $name; // Ohmed
+```
+
+#### 🔸 Add New Characters (By Index)
+```php
+$name[5] = "Z";
+echo $name; // OhmedZ
+```
+- If the index is beyond the current string length, PHP **appends** the new character.
+
+---
+
+### 🔍 Search
+#### 🔸 Single-Byte vs Multi-Byte
+- Regular functions (`$string[index]`) access **bytes**.
+- For **UTF-8** and multi-byte strings (e.g., Arabic, Chinese), use `mb_*` functions like:
+
+```php
+$text = "مرحبا";
+echo mb_substr($text, 0, 1); // م
+```
+
+---
+
+### ✅ Summary
+| Feature                | Supported? | Notes                            |
+|------------------------|------------|----------------------------------|
+| Zero-based indexing    | ✅         | `$str[0]` gives the first char   |
+| Negative indexing      | ✅ (PHP 7.1+)| `$str[-1]` gives last char       |
+| Direct character update| ✅         | `$str[1] = 'X'` modifies string  |
+| Append character       | ✅         | `$str[5] = 'Z'` extends string   |
+| Negative write         | ❌         | Cannot assign using `-1` index   |
+| Multi-byte safe access | ✅ via mb_ | Use `mb_substr()` for Unicode    |
+
+---
+
+
+## 📘 Lesson #054 - String Functions Part 1 [6 Functions]
+
+---
+
+### 🔧 1. `lcfirst()`
+Converts the **first character** of a string to lowercase.
+```php
+lcfirst("Ahmed"); // "ahmed"
+```
+
+---
+
+### 🔧 2. `ucfirst()`
+Converts the **first character** of a string to uppercase.
+```php
+ucfirst("ahmed"); // "Ahmed"
+```
+
+---
+
+### 🔧 3. `strtolower()`
+Converts **all characters** in a string to lowercase.
+```php
+strtolower("PHP IS COOL"); // "php is cool"
+```
+
+---
+
+### 🔧 4. `strtoupper()`
+Converts **all characters** in a string to uppercase.
+```php
+strtoupper("php is cool"); // "PHP IS COOL"
+```
+
+---
+
+### 🔧 5. `ucwords()`
+Capitalizes the **first letter of each word**.
+```php
+ucwords("learn php with osama"); // "Learn Php With Osama"
+```
+You can also specify custom delimiters:
+```php
+ucwords("one-two-three", "-"); // "One-Two-Three"
+```
+
+---
+
+### 🔧 6. `str_repeat()`
+Repeats a string multiple times.
+```php
+str_repeat("PHP", 3); // "PHPPHPPHP"
+```
+
+---
+
+### ✅ Summary
+These functions help in:
+- Controlling the **case** of strings
+- Formatting strings for display
+- Repeating patterns for formatting or output
+
+---
+
+
+## 📘 Lesson #055 - String Functions Part 2 [8 Functions]
+
+---
+
+### 🔧 1. `implode()` / `join()`
+Joins array elements into a string.
+```php
+$skills = ["PHP", "HTML", "CSS"];
+implode(" - ", $skills); // "PHP - HTML - CSS"
+```
+- `join()` is an alias for `implode()`.
+
+---
+
+### 🔧 2. `explode()`
+Splits a string into an array.
+```php
+$str = "PHP-HTML-CSS";
+explode("-", $str); // ["PHP", "HTML", "CSS"]
+```
+Supports optional **limit**:
+```php
+explode("-", $str, 2); // ["PHP", "HTML-CSS"]
+```
+
+---
+
+### 🔧 3. `str_shuffle()`
+Randomly shuffles all characters.
+```php
+str_shuffle("Ahmed"); // Output like: dAmhe
+```
+
+---
+
+### 🔧 4. `strrev()`
+Reverses the characters in a string.
+```php
+strrev("Ahmed"); // demhA
+```
+
+---
+
+### 🔧 5. `trim()`
+Removes whitespace or characters from **both** sides.
+```php
+trim("  Ahmed  "); // "Ahmed"
+```
+Supports **CharList** (custom characters to remove):
+```php
+trim("--Ahmed--", "-"); // "Ahmed"
+```
+
+---
+
+### 🔧 6. `ltrim()`
+Removes from the **left** side.
+```php
+ltrim("\t\n\rAhmed"); // "Ahmed"
+```
+
+---
+
+### 🔧 7. `rtrim()`
+Removes from the **right** side.
+```php
+rtrim("Ahmed\0"); // "Ahmed"
+```
+
+---
+
+### 🧪 Common Whitespace Characters
+| Type             | Char     | Escape       |
+|------------------|----------|--------------|
+| Space            |          | `" "`        |
+| Tab              | \t       | `"\t"`       |
+| New Line         | \n       | `"\n"`       |
+| Carriage Return  | \r       | `"\r"`       |
+| Vertical Tab     | \x0B     | `"\x0B"`     |
+| NULL             | \0       | `"\0"`       |
+
+---
+
+### ✅ Summary
+Functions for:
+- Joining and splitting strings
+- Formatting whitespace
+- Cleaning input data
+- Randomization and reversal
+
+---
+
+## 📘 Lesson #056 - String Functions Part 3 [5 Functions]
+
+---
+
+### 🔧 1. `chunk_split()`
+Splits a string into chunks and adds an optional ending.
+```php
+chunk_split("AhmedAbuObaida", 3, "|");
+// "Ahm|edA|buO|bai|da|"
+```
+- Default `length` = 76, `end` = `\r\n` if not provided.
+
+---
+
+### 🔧 2. `strlen()`
+Returns the number of bytes (not characters) in the string.
+```php
+strlen("Ahmed"); // 5
+```
+
+⚠️ For multi-byte strings (e.g., Arabic), use `mb_strlen()`.
+```php
+mb_strlen("مرحبا"); // 5
+```
+
+---
+
+### 🔧 3. `str_split()`
+Splits a string into an array of characters or chunks.
+```php
+str_split("Ahmed"); // ["A", "h", "m", "e", "d"]
+str_split("Ahmed", 2); // ["Ah", "me", "d"]
+```
+
+---
+
+### 🔧 4. `strip_tags()`
+Strips HTML and PHP tags from a string.
+```php
+strip_tags("<h1>Hello</h1> <script>alert('X')</script>");
+// "Hello alert('X')"
+```
+You can allow certain tags:
+```php
+strip_tags("<b>Hello</b>", "<b>"); // "<b>Hello</b>"
+```
+
+---
+
+### 🔧 5. `nl2br()`
+Converts newlines (`\n`) into `<br>` or `<br />`.
+```php
+echo nl2br("Hello\nWorld"); // "Hello<br>World"
+```
+- Set second parameter to `true` to return `<br />` (XHTML).
+
+---
+
+### ✅ Summary
+Use these functions to:
+- Chunk and split strings
+- Clean user input
+- Convert output formatting for web
+- Count characters and structure display
+
+---
+
+## 📘 Lesson #057 - String Functions Part 4 [5 Functions]
+
+---
+
+### 🔧 1. `strpos()`
+Finds the **first occurrence** of a substring (case-sensitive).
+```php
+strpos("Hello World", "o"); // 4
+```
+Optional start position:
+```php
+strpos("Hello Hello", "o", 5); // 10
+```
+
+---
+
+### 🔧 2. `strrpos()`
+Finds the **last occurrence** of a substring (case-sensitive).
+```php
+strrpos("Hello Hello", "l"); // 9
+```
+Optional start position (works differently depending on PHP version).
+
+---
+
+### 🔧 3. `stripos()`
+Finds the first occurrence, **case-insensitive**.
+```php
+stripos("Hello World", "O"); // 4
+```
+
+---
+
+### 🔧 4. `strripos()`
+Finds the last occurrence, **case-insensitive**.
+```php
+strripos("Hello Hello", "L"); // 9
+```
+
+---
+
+### 🔧 5. `substr_count()`
+Counts how many times a substring appears.
+```php
+substr_count("PHP is fast and PHP is popular", "PHP"); // 2
+```
+Optional start and length:
+```php
+substr_count("PHP PHP PHP", "PHP", 4, 7); // 2
+```
+
+---
+
+### ✅ Summary
+| Function      | Case | Position     | Description                        |
+|---------------|------|--------------|------------------------------------|
+| `strpos`      | ✓    | First        | Case-sensitive                     |
+| `strrpos`     | ✓    | Last         | Case-sensitive                     |
+| `stripos`     | ✗    | First        | Case-insensitive                   |
+| `strripos`    | ✗    | Last         | Case-insensitive                   |
+| `substr_count`| ✓    | N/A          | Count occurrences                  |
+
+---
+
+
+## 📘 Lesson #058 - String Functions Part 5 [4 Functions]
+
+---
+
+### 🔧 1. `parse_str()`
+Parses a query string into variables or an array.
+```php
+$query = "name=Ahmed&age=30";
+parse_str($query, $result);
+print_r($result);
+// ["name" => "Ahmed", "age" => "30"]
+```
+
+---
+
+### 🔧 2. `quotemeta()`
+Escapes special characters with backslashes: `. \ + * ? [ ^ ] ( ) $`
+```php
+quotemeta("PHP (version) + fast?");
+// "PHP \(version\) \+ fast\?"
+```
+
+---
+
+### 🔧 3. `str_pad()`
+Pads a string to a certain length.
+```php
+str_pad("PHP", 6); // "PHP   " (default right)
+str_pad("PHP", 6, "-", STR_PAD_BOTH); // "-PHP-"
+str_pad("PHP", 6, "0", STR_PAD_LEFT); // "000PHP"
+str_pad("PHP", 6, "_", STR_PAD_RIGHT); // "PHP___"
+```
+
+---
+
+### 🔧 4. `strtr()`
+#### 🔸 Version 1: From/To characters
+```php
+strtr("Ahmed", "Ae", "@3"); // "@hm3d"
+```
+
+#### 🔸 Version 2: Using associative array
+```php
+strtr("Ahmed Abu", ["Ahmed" => "A.", "Abu" => "B."]); // "A. B."
+```
+
+---
+
+### ✅ Summary
+| Function     | Purpose                             |
+|--------------|-------------------------------------|
+| `parse_str`  | Convert query string to array       |
+| `quotemeta`  | Escape regex/meta characters        |
+| `str_pad`    | Add padding to string               |
+| `strtr`      | Character or string replacements    |
+
+---
+
+
+## 📘 Lesson #059 - String Functions: `str_replace()` & `str_ireplace()`
+
+---
+
+### 🔧 1. `str_replace()`
+Replaces all occurrences of the search string with the replacement string (case-sensitive).
+
+**Syntax:**
+```php
+str_replace(mixed $search, mixed $replace, mixed $subject, int &$count = null)
+```
+
+**Example:**
+```php
+str_replace("Ahmed", "Osama", "Hello Ahmed"); // "Hello Osama"
+```
+
+**Replace multiple values:**
+```php
+str_replace(["One", "Two"], [1, 2], "One, Two, Three"); // "1, 2, Three"
+```
+
+**Count replacements:**
+```php
+$text = "Ahmed Ahmed";
+str_replace("Ahmed", "Osama", $text, $count);
+echo $count; // 2
+```
+
+---
+
+### 🔧 2. `str_ireplace()`
+Same as `str_replace()` but **case-insensitive**.
+
+**Example:**
+```php
+str_ireplace("ahmed", "Osama", "Hello Ahmed"); // "Hello Osama"
+```
+
+**Replace Count:**
+```php
+$text = "Ahmed ahmed AHMED";
+str_ireplace("ahmed", "Osama", $text, $count);
+echo $count; // 3
+```
+
+---
+
+### ✅ Summary
+| Function        | Case-Sensitive | Count Support | Notes                     |
+|-----------------|----------------|----------------|----------------------------|
+| `str_replace`   | ✅ Yes         | ✅ Yes         | Simple direct replacement |
+| `str_ireplace`  | ❌ No          | ✅ Yes         | Case-insensitive          |
+
+---
+
+## 📘 Lesson #060 - String Functions: `substr_replace()`
+
+---
+
+### 🔧 `substr_replace()`
+Replaces a portion of a string with another string.
+
+**Syntax:**
+```php
+substr_replace(string $string, string $replacement, int $start, int|null $length = null)
+```
+
+---
+
+### 🔹 Examples
+
+#### ✅ Replace a Portion
+```php
+substr_replace("Hello Ahmed", "Osama", 6); // "Hello Osama"
+```
+
+#### ✅ Replace with Length Specified (positive number)
+```php
+substr_replace("Hello Ahmed", "Osama", 6, 5); // "Hello Osama"
+```
+
+#### ✅ Insert Instead of Replace (length = 0)
+```php
+substr_replace("Hello Ahmed", " Mr.", 5, 0); // "Hello Mr. Ahmed"
+```
+
+#### ✅ Negative Length (leave N characters from the end)
+```php
+substr_replace("Hello Ahmed", "Osama", 6, -2); // "Hello Osamaed"
+```
+
+---
+
+### 📌 Behavior by Length Parameter
+| Length          | Behavior                              |
+|------------------|----------------------------------------|
+| Positive Number  | Replace that number of characters     |
+| Zero             | Insert without removing               |
+| Negative Number  | Leave N characters at the end         |
+
+---
+
+### ✅ Summary
+- `substr_replace()` is flexible for replacing, inserting, or partially editing strings.
+- Great for modifying specific parts of strings by index.
+
+---
+
+## 📘 Lesson #061 - String Functions Part 8 [4 Functions]
+
+---
+
+### 🔧 1. `wordwrap()`
+Wraps a string to a given number of characters using a break character.
+
+**Syntax:**
+```php
+wordwrap(string $string, int $width = 75, string $break = "\n", bool $cut = false)
+```
+
+**Example:**
+```php
+$text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+echo wordwrap($text, 15, "<br>");
+```
+- `cut = true`: forces breaking long words if they exceed the width.
+
+---
+
+### 🔧 2. `ord()`
+Returns the ASCII value of the **first character** of a string.
+```php
+ord("A"); // 65
+ord("a"); // 97
+```
+
+---
+
+### 🔧 3. `chr()`
+Returns the character from an ASCII value.
+```php
+chr(65); // "A"
+chr(97); // "a"
+```
+
+---
+
+### 🔧 4. `similar_text()`
+Calculates the similarity between two strings.
+
+**Returns:** Number of matching characters. Optionally, also returns the percentage.
+```php
+similar_text("Ahmed", "Ahed", $percent);
+echo $percent; // 80
+```
+
+---
+
+### ✅ Summary
+| Function        | Description                                   |
+|-----------------|-----------------------------------------------|
+| `wordwrap()`    | Breaks lines in long strings                  |
+| `ord()`         | ASCII value of a character                    |
+| `chr()`         | Character from an ASCII value                 |
+| `similar_text()`| Finds number of similar characters + percent |
+
+---
+
+## 📘 Lesson #062 - String Functions Part 9 [3 Functions]
+
+---
+
+### 🔧 1. `strstr()`
+Finds the first occurrence of a string — **case-sensitive**.
+- It returns the part of the string starting from the match.
+- Alias: `strchr()`
+
+**Syntax:**
+```php
+strstr(string $haystack, string $needle, bool $before_needle = false)
+```
+
+**Example:**
+```php
+strstr("Hello Ahmed", "Ahmed"); // "Ahmed"
+strstr("Hello Ahmed", "Ahmed", true); // "Hello "
+```
+
+---
+
+### 🔧 2. `stristr()`
+Same as `strstr()` but **case-insensitive**.
+```php
+stristr("Hello Ahmed", "ahmed"); // "Ahmed"
+stristr("Hello Ahmed", "AHMED", true); // "Hello "
+```
+
+---
+
+### 🔧 3. `number_format()`
+Formats a number with grouped thousands and optional decimals.
+
+**Syntax:**
+```php
+number_format(float $number, int $decimals = 0, string $decimal_separator = ".", string $thousands_separator = ",")
+```
+
+**Examples:**
+```php
+number_format(1234567.891); // "1,234,568"
+number_format(1234567.891, 2); // "1,234,567.89"
+number_format(1234567.891, 2, ",", " "); // "1 234 567,89"
+```
+
+---
+
+### ✅ Summary
+| Function          | Description                                 |
+|-------------------|---------------------------------------------|
+| `strstr()`        | Finds substring (case-sensitive)            |
+| `stristr()`       | Finds substring (case-insensitive)          |
+| `number_format()` | Formats number with optional separators     |
+
+---
